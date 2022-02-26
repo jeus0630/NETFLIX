@@ -101,16 +101,28 @@ const List: React.FunctionComponent<IListProps> = (props) => {
           )
         }
         <ul className="container" ref={ulRef}>
-          <ListItem></ListItem>
-          <ListItem></ListItem>
-          <ListItem></ListItem>
-          <ListItem></ListItem>
-          <ListItem></ListItem>
-          <ListItem></ListItem>
-          <ListItem></ListItem>
-          <ListItem></ListItem>
-          <ListItem></ListItem>
-          <ListItem></ListItem>
+          <ListItem index={0}></ListItem>
+          <ListItem index={1}></ListItem>
+          <ListItem index={2}></ListItem>
+          <ListItem index={3}></ListItem>
+          <ListItem index={4}></ListItem>
+          <ListItem index={5}></ListItem>
+          <ListItem index={6}></ListItem>
+          <ListItem index={7}></ListItem>
+          <ListItem index={8}></ListItem>
+          <ListItem index={9}></ListItem>
+        </ul>
+        <ul className="container" ref={ulRef}>
+          <ListItem index={0}></ListItem>
+          <ListItem index={1}></ListItem>
+          <ListItem index={2}></ListItem>
+          <ListItem index={3}></ListItem>
+          <ListItem index={4}></ListItem>
+          <ListItem index={5}></ListItem>
+          <ListItem index={6}></ListItem>
+          <ListItem index={7}></ListItem>
+          <ListItem index={8}></ListItem>
+          <ListItem index={9}></ListItem>
         </ul>
         {
           state.isMoveRight && (
