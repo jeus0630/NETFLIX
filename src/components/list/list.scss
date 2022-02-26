@@ -1,3 +1,44 @@
-.list{
-    
+.list {
+  width: 100%;
+  margin-top: 10px;
+
+  .list-title {
+    margin-left: 50px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 300;
+  }
+
+  .wrapper {
+    position: relative;
+    .slider-arrow {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 50px;
+      height: 100%;
+      margin: auto;
+      background-color: rgb(22, 22, 22, 0.5);
+      color: #fff;
+      z-index: 10;
+      cursor: pointer;
+
+      &.left {
+        left: 0;
+      }
+
+      &.right {
+        right: 0;
+      }
+    }
+
+    .container {
+      display: flex;
+      width: max-content;
+      margin-top: 10px;
+      margin-left: 50px;
+      transform: translateX(0px);
+      transition: transform .5s ease;
+    }
+  }
 }
