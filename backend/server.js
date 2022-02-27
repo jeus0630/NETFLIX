@@ -7,6 +7,7 @@ const app = express();
 
 const authRoute = require('./routes/auth');
 const usersRoute = require('./routes/users');
+const movieRoute = require('./routes/movies');
 
 app.use(helmet());
 app.use(morgan('dev'));
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.use("/api/auth",authRoute);
 app.use("/api/users",usersRoute); 
+app.use("/api/movies",movieRoute); 
 
 const main = () => {
     app.listen(process.env.PORT || 8080, () => {

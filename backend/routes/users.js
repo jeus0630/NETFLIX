@@ -38,21 +38,8 @@ router.delete("/:id",verify,async (req,res)=>{
     }
 })
 
-//GET
-router.get("/:id",async (req,res)=>{
-
-    try{
-        const user = await User.findById(req.params.id);
-        const {password, ...info} = user._doc;
-        res.status(200).json(info);
-    }catch(err){
-        res.status(500).json(err);
-    }
-    
-})
-
 //GET ALL
-router.delete("/:id",verify,async (req,res)=>{
+router.get("/",verify,async (req,res)=>{
     const query = req.query.new;
     if(req.user.isAdmin){
         try{
@@ -69,22 +56,7 @@ router.delete("/:id",verify,async (req,res)=>{
 //GET USER STATS
 router.get("/stats", async (req,res)=>{
     const today = new Date();
-    const lastYear = today.getFullYear(today.setFullYear() - 1);
-
-    const monthsArr = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-    ]
+    const lastYear = today.setFullYear(today.setFullYear() - 1);
 
     try{
         const data = await User.aggregate([
@@ -103,6 +75,19 @@ router.get("/stats", async (req,res)=>{
     }catch(err){
         res.status(500).json(err)
     }
+})
+
+//GET
+router.get("/:id",async (req,res)=>{
+
+    try{
+        const user = await User.findById(req.params.id);
+        const {password, ...info} = user._doc;
+        res.status(200).json(info);
+    }catch(err){
+        res.status(500).json(err);
+    }
+    
 })
 
 module.exports = router;
