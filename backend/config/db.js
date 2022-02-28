@@ -9,7 +9,7 @@ const connect = (cb) => {
         console.log('Successfully Connected');
         cb();
     }) 
-}
+} 
 
 module.exports = {
     connect
