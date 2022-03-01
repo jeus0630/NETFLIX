@@ -1,11 +1,11 @@
 import * as React from "react";
 import { useEffect } from "react";
-import { useDispatch} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Featured from "../../components/featured/Featured";
 import List from "../../components/list/List";
 import Navbar from "../../components/navbar/Navbar";
 import { getList } from "../../redux/listSlice";
-import { AppDispatch } from "../../redux/store";
+import { AppDispatch, RootState } from "../../redux/store";
 import "./home.scss";
 interface IHomeProps {
   type?: string;
@@ -13,15 +13,16 @@ interface IHomeProps {
 
 const Home: React.FunctionComponent<IHomeProps> = ({ type }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const lists = useSelector<RootState>(state => state.list);
 
   useEffect(() => {
     dispatch(getList());
-  
+
     return () => {
-      
+
     }
   }, [])
-  
+
 
   return (
     <div className="home">
