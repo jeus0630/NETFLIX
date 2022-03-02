@@ -1,0 +1,64 @@
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  height: 50px;
+  background-color: #fff;
+
+  .top-bar-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0px 20px;
+
+    .top-left {
+      .logo {
+        font-weight: bold;
+        font-size: 30px;
+        color: darkblue;
+        cursor: pointer;
+      }
+    }
+
+    .top-right {
+      display: flex;
+      align-items: center;
+
+      .top-bar-icon-container {
+        position: relative;
+        cursor: pointer;
+        color: #555;
+
+        &:not(:last-of-type) {
+          margin-right: 10px;
+        }
+
+        .top-icon-badge {
+          position: absolute;
+          top: -5px;
+          right: 5px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 15px;
+          height: 15px;
+          background-color: red;
+          border-radius: 50%;
+          font-size: 10px;
+          color: #fff;
+        }
+      }
+
+      .img-wrap {
+        width: 40px;
+        cursor: pointer;
+        img {
+          width: 100%;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+}

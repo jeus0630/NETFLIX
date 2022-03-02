@@ -1,0 +1,60 @@
+.widget-lg {
+  flex: 2;
+  padding: 20px;
+  -webkit-box-shadow: 0px 0px 15px -10px #000;
+  box-shadow: 0px 0px 15px -10px #000;
+
+  .widget-lg-title {
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  .widget-lg-table {
+    width: 100%;
+    border-spacing: 20px;
+
+    .widget-lg-tr {
+      .widget-lg-th {
+        text-align: left;
+      }
+
+      .widget-lg-user {
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+
+        .widget-lg-img {
+          width: 40px;
+          height: 40px;
+          margin-right: 10px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+
+      .widget-lg-date,
+      .widget-lg-amount {
+        font-weight: 300;
+      }
+    }
+  }
+}
+
+.widget-lg-button {
+  padding: 5px 7px;
+  border: none;
+  border-radius: 10px;
+
+  &.Approved {
+    background-color: #e5faf2;
+    color: #3bb077;
+  }
+  &.Declined {
+    background-color: #fff0f1;
+    color: #d95087;
+  }
+  &.Pending {
+    background-color: #ebf1fe;
+    color: #2a7ade;
+  }
+}
