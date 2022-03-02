@@ -126,7 +126,7 @@ const Products: React.FunctionComponent<IProductsProps> = (props) => {
         {
             field: "action", headerName: "Action", width: 150, renderCell: (params) => (
                 <>
-                    <Link to={`/product/${params.row.id}`}>
+                    <Link to={`/movie/${params.row.id}`}>
                         <button className="product-list-edit">Edit</button>
                     </Link>
                     <DeleteOutline className='product-list-delete' onClick={() => handleClick(params.row.id)}></DeleteOutline>

@@ -25,9 +25,9 @@ function App() {
             <Route path="/users" element={<UserList></UserList>}></Route>
             <Route path="/user/:id" element={<User></User>}></Route>
             <Route path="/new-user" element={<NewUser></NewUser>}></Route>
-            <Route path="/products" element={<Products></Products>}></Route>
-            <Route path="/product/:id" element={<Product></Product>}></Route>
-            <Route path="/new-product" element={<NewProduct></NewProduct>}></Route>
+            <Route path="/movies" element={<Products></Products>}></Route>
+            <Route path="/movie/:id" element={<Product></Product>}></Route>
+            <Route path="/new-movie" element={<NewProduct></NewProduct>}></Route>
             <Route path="/*" element={<NotFound></NotFound>}></Route>
           </Routes>
         </div>

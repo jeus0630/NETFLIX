@@ -30,7 +30,7 @@ const Product: React.FunctionComponent<IProductProps> = (props) => {
         <div className="product">
             <div className="product-title-container">
                 <h1 className="product-title">Product</h1>
-                <button className="product-add-button" onClick={() => { navigate("/new-product") }}>Create</button>
+                <button className="product-add-button" onClick={() => { navigate("/new-movie") }}>Create</button>
             </div>
             <div className="product-top">
                 <div className="product-top-left">
