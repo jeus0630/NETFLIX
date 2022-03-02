@@ -1,6 +1,7 @@
 import { Add, PlayArrow, ThumbDownAltOutlined, ThumbUpAltOutlined } from '@mui/icons-material';
 import * as React from 'react';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import "./listItem.scss";
 
 interface IListItemProps {
@@ -49,7 +50,7 @@ const ListItem: React.FunctionComponent<IListItemProps> = ({ index, id }) => {
     });
 
     useEffect(() => {
-        
+
         const movieInfoFetching = async () => {
             try {
                 const res = await fetch(`/api/movies/${id}`, {
@@ -75,40 +76,43 @@ const ListItem: React.FunctionComponent<IListItemProps> = ({ index, id }) => {
 
         }
 
-    }, [])
+    }, [])  
 
 
     return (
+
         <li className="list-item"
             onMouseEnter={() => { setIsHovered(true) }}
             onMouseLeave={() => { setIsHovered(false) }}
             style={{ left: isHovered ? index * 225 - 50 + index * 2.5 : undefined }}>
-            <img src={info.img}
-                alt="" />
-            {
-                isHovered && (
-                    <>
-                        <video src={info.trailer} autoPlay={true} loop></video>
-                        <div className="item-info">
-                            <div className="icons">
-                                <PlayArrow className='icon'></PlayArrow>
-                                <Add className='icon'></Add>
-                                <ThumbUpAltOutlined className='icon'></ThumbUpAltOutlined>
-                                <ThumbDownAltOutlined className='icon'></ThumbDownAltOutlined>
+            <Link to="/watch" state={info.video}>
+                <img src={info.img}
+                    alt="" />
+                {
+                    isHovered && (
+                        <>
+                            <video src={info.trailer} autoPlay={true} loop></video>
+                            <div className="item-info">
+                                <div className="icons">
+                                    <PlayArrow className='icon'></PlayArrow>
+                                    <Add className='icon'></Add>
+                                    <ThumbUpAltOutlined className='icon'></ThumbUpAltOutlined>
+                                    <ThumbDownAltOutlined className='icon'></ThumbDownAltOutlined>
+                                </div>
+                                <div className="item-info-top">
+                                    <span>1 hour 14 mins</span>
+                                    <span className='limit'>+{info.limit}</span>
+                                    <span>{info.year}</span>
+                                </div>
+                                <div className="desc">
+                                    {info.desc}
+                                </div>
+                                <div className="genre">{info.genre}</div>
                             </div>
-                            <div className="item-info-top">
-                                <span>1 hour 14 mins</span>
-                                <span className='limit'>+{info.limit}</span>
-                                <span>{info.year}</span>
-                            </div>
-                            <div className="desc">
-                                {info.desc}
-                            </div>
-                            <div className="genre">{info.genre}</div>
-                        </div>
-                    </>
-                )
-            }
+                        </>
+                    )
+                }
+            </Link>
         </li>
     );
 };
