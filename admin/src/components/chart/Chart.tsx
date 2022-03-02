@@ -14,7 +14,7 @@ interface IChartProps {
 
 const Chart: React.FunctionComponent<IChartProps> = ({ propData, dataKey, title }) => {
 
-  const data = useSelector((state: RootState) => state.stats);
+  const data = useSelector((state: RootState) => state.stats.stats);
 
   return (
     <div className="chart">

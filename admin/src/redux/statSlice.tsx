@@ -26,7 +26,7 @@ export const getStats = createAsyncThunk("/stats/get", async () => {
         });
 
         const data = await res.json();
-        
+
         type Stat = {
             _id: number;
             total: number;
@@ -43,15 +43,60 @@ export const getStats = createAsyncThunk("/stats/get", async () => {
     }
 });
 
-type InitialState = {
-    name: string;
-    "New User": string;
-}[];
+export const getNewUsers = createAsyncThunk("/new-users/get", async () => {
 
-const initialState: InitialState = [{
-    name: null!,
-    "New User": null!
-}];
+    try {
+        const res = await fetch("/api/users?new=true", {
+            headers: {
+                token: "barere eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMWYwOGMzYTBhOTQ3YzdkMWUyOTJiNyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY0NjIwMTQ0NSwiZXhwIjoxNjQ2NjMzNDQ1fQ.nNNpWj7Y-RNTNIXOpfzOHKutfasiXtmHFHbZVGWzZvU"
+            }
+        });
+
+        const data = await res.json();
+
+        return data;
+    } catch (err) {
+        console.log(err);
+    }
+
+});
+
+
+type InitialState = {
+    stats: {
+        name: string;
+        "New User": string;
+    }[];
+    newUsers: {
+        _id: string;
+        username: string;
+        email: string;
+        password: string;
+        profilePic: string;
+        isAdmin: boolean;
+        createdAt: string;
+        updatedAt: string;
+        __v: 0
+    }[];
+};
+
+const initialState: InitialState = {
+    stats: [{
+        name: null!,
+        "New User": null!
+    }],
+    newUsers: [{
+        _id: "",
+        username: "",
+        email: "",
+        password: "",
+        profilePic: "",
+        isAdmin: false,
+        createdAt: "",
+        updatedAt: "",
+        __v: 0
+    }]
+};
 
 const slice = createSlice({
     name: "stats",
@@ -60,7 +105,12 @@ const slice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(getStats.fulfilled, (state, action) => {
-            return [
+            state.stats = [
+                ...action.payload
+            ]
+        })
+        builder.addCase(getNewUsers.fulfilled, (state, action) => {
+            state.newUsers = [
                 ...action.payload
             ]
         });
