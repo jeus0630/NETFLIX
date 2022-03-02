@@ -8,7 +8,7 @@ router.post("/", verify, async (req,res)=>{
         const newList = new List(req.body);
 
         try{
-            const savedList = await newMovie.save();
+            const savedList = await newList.save();
             res.status(201).json(savedList);
         }catch(err){
             res.status(500).json(err);
