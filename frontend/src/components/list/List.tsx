@@ -7,7 +7,18 @@ import { useRef, useState, useReducer, useEffect } from "react";
 import ListItem from "../listItem/ListItem";
 import "./list.scss";
 
-interface IListProps { }
+interface IListProps {
+  list: {
+    content: string[];
+    createdAt: string;
+    genre: string;
+    title: string;
+    type: string;
+    updatedAt: string;
+    __v: number;
+    _id: string;
+  }
+}
 
 type State = {
   slideNumber: {
@@ -18,7 +29,7 @@ type State = {
   isMoveRight: boolean;
 }
 
-type Action = { type: "slideNumber"; payload: {toRight: number; toLeft: number;} } | { type: "isMoved"; payload: boolean; } | { type: "isMoveRight"; payload: boolean; };
+type Action = { type: "slideNumber"; payload: { toRight: number; toLeft: number; } } | { type: "isMoved"; payload: boolean; } | { type: "isMoveRight"; payload: boolean; };
 
 type Reducer = (state: State, action: Action) => State;
 
@@ -55,7 +66,7 @@ const reducer: Reducer = (state, action) => {
   }
 }
 
-const List: React.FunctionComponent<IListProps> = (props) => {
+const List: React.FunctionComponent<IListProps> = ({ list }) => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -66,7 +77,7 @@ const List: React.FunctionComponent<IListProps> = (props) => {
 
     if (isMoveRight) {
       dispatch({ type: "isMoveRight", payload: true });
-      dispatch({ type: "slideNumber", payload: {toLeft: 0, toRight: Math.ceil(numToRight)} });
+      dispatch({ type: "slideNumber", payload: { toLeft: 0, toRight: Math.ceil(numToRight) } });
     }
 
     return () => {
@@ -74,55 +85,39 @@ const List: React.FunctionComponent<IListProps> = (props) => {
     }
   }, [])
 
-
   const ulRef = useRef<HTMLUListElement>(null!);
 
   const handleClick = (direction: "left" | "right") => {
     const distance = ulRef.current.getBoundingClientRect().x - 50;
     if (direction === "left") {
-      dispatch({type: "slideNumber", payload: {...state.slideNumber, toLeft: state.slideNumber.toLeft -1, toRight: state.slideNumber.toRight + 1}});
+      dispatch({ type: "slideNumber", payload: { ...state.slideNumber, toLeft: state.slideNumber.toLeft - 1, toRight: state.slideNumber.toRight + 1 } });
       ulRef.current.style.transform = `translateX(${230 + distance}px)`
     }
     if (direction === "right") {
-      dispatch({ type: "slideNumber", payload: {...state.slideNumber, toLeft: state.slideNumber.toLeft + 1, toRight: state.slideNumber.toRight - 1} });
+      dispatch({ type: "slideNumber", payload: { ...state.slideNumber, toLeft: state.slideNumber.toLeft + 1, toRight: state.slideNumber.toRight - 1 } });
       dispatch({ type: "isMoved", payload: true });
       ulRef.current.style.transform = `translateX(${-230 + distance}px)`
     }
-    
+
   }
 
   return (
     <div className="list">
-      <em className="list-title">Continue to watch</em>
+      <em className="list-title">{list.title}</em>
       <div className="wrapper">
         {
           state.isMoved && (
-            <ArrowBackIosOutlined className="slider-arrow left" onClick={() => handleClick("left")} style={{display: state.slideNumber.toLeft > 0 ? "block" : "none"}}></ArrowBackIosOutlined>
+            <ArrowBackIosOutlined className="slider-arrow left" onClick={() => handleClick("left")} style={{ display: state.slideNumber.toLeft > 0 ? "block" : "none" }}></ArrowBackIosOutlined>
           )
         }
         <ul className="container" ref={ulRef}>
-          <ListItem index={0}></ListItem>
-          <ListItem index={1}></ListItem>
-          <ListItem index={2}></ListItem>
-          <ListItem index={3}></ListItem>
-          <ListItem index={4}></ListItem>
-          <ListItem index={5}></ListItem>
-          <ListItem index={6}></ListItem>
-          <ListItem index={7}></ListItem>
-          <ListItem index={8}></ListItem>
-          <ListItem index={9}></ListItem>
-        </ul>
-        <ul className="container" ref={ulRef}>
-          <ListItem index={0}></ListItem>
-          <ListItem index={1}></ListItem>
-          <ListItem index={2}></ListItem>
-          <ListItem index={3}></ListItem>
-          <ListItem index={4}></ListItem>
-          <ListItem index={5}></ListItem>
-          <ListItem index={6}></ListItem>
-          <ListItem index={7}></ListItem>
-          <ListItem index={8}></ListItem>
-          <ListItem index={9}></ListItem>
+          {
+            list.content.map((con, idx) => {
+              return (
+                <ListItem key={idx} index={idx} id={con}></ListItem>
+              )
+            })
+          }
         </ul>
         {
           state.isMoveRight && (

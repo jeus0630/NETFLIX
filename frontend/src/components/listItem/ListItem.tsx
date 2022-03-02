@@ -1,28 +1,94 @@
 import { Add, PlayArrow, ThumbDownAltOutlined, ThumbUpAltOutlined } from '@mui/icons-material';
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import "./listItem.scss";
 
 interface IListItemProps {
     index: number;
+    id: string;
 }
 
-const ListItem: React.FunctionComponent<IListItemProps> = ({ index }) => {
+type Info = {
+    _id: string;
+    title: string;
+    desc: string;
+    img: string;
+    imgTitle: string;
+    trailer: string;
+    video: string;
+    year: string;
+    limit: string;
+    genre: string;
+    isSeries: boolean;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+}
+
+const ListItem: React.FunctionComponent<IListItemProps> = ({ index, id }) => {
+
     const [isHovered, setIsHovered] = useState(false);
     const trailer =
         "https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c0fd273d2c6d9a064f3ae35579b2bbdf&profile_id=139&oauth2_token_id=57447761";
+
+    const [info, setInfo] = useState<Info>({
+        _id: '',
+        title: '',
+        desc: '',
+        img: '',
+        imgTitle: '',
+        trailer: '',
+        video: '',
+        year: '',
+        limit: '',
+        genre: '',
+        isSeries: false,
+        createdAt: '',
+        updatedAt: '',
+        __v: 0
+    });
+
+    useEffect(() => {
+        
+        const movieInfoFetching = async () => {
+            try {
+                const res = await fetch(`/api/movies/${id}`, {
+                    headers: {
+                        'token': 'barere eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMWI0OGFkMzc4MDJkMmMzNGRmNjhjYiIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NDYyMDA1NjEsImV4cCI6MTY0NjYzMjU2MX0.NWAZqIW3uOqK_hElLwvWzN6ByPsxbFRmSJQHxI8vAF4'
+                    }
+                });
+                const data = await res.json();
+
+                setInfo({
+                    ...info,
+                    ...data
+                });
+            } catch (err) {
+                console.log(err);
+
+            }
+        }
+
+        movieInfoFetching();
+
+        return () => {
+
+        }
+
+    }, [])
+
 
     return (
         <li className="list-item"
             onMouseEnter={() => { setIsHovered(true) }}
             onMouseLeave={() => { setIsHovered(false) }}
             style={{ left: isHovered ? index * 225 - 50 + index * 2.5 : undefined }}>
-            <img src="https://occ-0-1723-92.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABU7D36jL6KiLG1xI8Xg_cZK-hYQj1L8yRxbQuB0rcLCnAk8AhEK5EM83QI71bRHUm0qOYxonD88gaThgDaPu7NuUfRg.jpg?r=4ee"
+            <img src={info.img}
                 alt="" />
             {
                 isHovered && (
                     <>
-                        <video src={trailer} autoPlay={true} loop></video>
+                        <video src={info.trailer} autoPlay={true} loop></video>
                         <div className="item-info">
                             <div className="icons">
                                 <PlayArrow className='icon'></PlayArrow>
@@ -32,13 +98,13 @@ const ListItem: React.FunctionComponent<IListItemProps> = ({ index }) => {
                             </div>
                             <div className="item-info-top">
                                 <span>1 hour 14 mins</span>
-                                <span className='limit'>+16</span>
-                                <span>1999</span>
+                                <span className='limit'>+{info.limit}</span>
+                                <span>{info.year}</span>
                             </div>
                             <div className="desc">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. At quidem quod inventore veritatis ipsum perferendis ad voluptate harum provident non, exercitationem nobis laborum, est iste ullam quas labore nostrum? Vel.
+                                {info.desc}
                             </div>
-                            <div className="genre">Action</div>
+                            <div className="genre">{info.genre}</div>
                         </div>
                     </>
                 )
