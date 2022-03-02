@@ -2,6 +2,7 @@ import { InfoOutlined, PlayArrow } from "@mui/icons-material";
 import * as React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setGenre } from "../../redux/genreSlice";
 import { getRandomMovie } from "../../redux/movieSlice";
 import { AppDispatch, RootState } from "../../redux/store";
 import "./featured.scss";
@@ -24,15 +25,17 @@ const Featured: React.FunctionComponent<IFeaturedProps> = ({ type }) => {
     }
   }, [type])
 
-  console.log(movie);
-
+  const genreHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const val = e.target.options[e.target.selectedIndex].value;
+    dispatch(setGenre(val));
+  }
 
   return (
     <div className="featured">
       {type && (
         <div className="category">
           <span>{type === "movie" ? "Movies" : "Series"}</span>
-          <select name="genre" id="genre">
+          <select name="genre" id="genre" onChange={genreHandler}>
             <option value="">Genre</option>
             <option value="adventure">Adventure</option>
             <option value="comedy">Comedy</option>

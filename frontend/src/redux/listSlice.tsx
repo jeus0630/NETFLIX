@@ -82,7 +82,6 @@ const listSlice = createSlice({
             .addCase(getRandomList.fulfilled, (state, action: PayloadAction<InitialState>) => {
                 console.log('Success');
                 return [
-                    ...state,
                     ...action.payload
                 ]
             })

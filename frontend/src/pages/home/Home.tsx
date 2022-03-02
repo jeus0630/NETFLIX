@@ -15,7 +15,7 @@ const Home: React.FunctionComponent<IHomeProps> = ({ type }) => {
   const dispatch = useDispatch<AppDispatch>();
   const lists = useSelector((state: RootState) => state.list);
   const { genre } = useSelector((state: RootState) => state.genre);
-
+  
   useEffect(() => {
     dispatch(getRandomList({
       type,
