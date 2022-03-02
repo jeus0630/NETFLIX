@@ -13,6 +13,7 @@ import NewProduct from './pages/newProduct/NewProduct';
 import NotFound from './pages/notFound/NotFound';
 
 function App() {
+
   return (
     <Router>
       <div>
