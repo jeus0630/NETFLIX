@@ -4,34 +4,24 @@ import FeaturedInfo from '../../components/featuredInfo/FeaturedInfo';
 import WidgetLg from '../../components/widgetLg/WidgetLg';
 import WidgetSm from '../../components/widgetSm/WidgetSm';
 import "./home.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from '../../redux/store';
+import { getStats } from '../../redux/statSlice';
 
 interface IHomeProps {
 }
 
 const Home: React.FunctionComponent<IHomeProps> = (props) => {
 
-    const MONTHS = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
-    ];
-
-    const [userStats, setUserStats] = useState([]);
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
 
+        dispatch(getStats());
+
         return () => {
-            
+
         }
     }, [])
 

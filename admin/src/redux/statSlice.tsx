@@ -2,6 +2,22 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const getStats = createAsyncThunk("/stats/get", async () => {
+
+    const MONTHS = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+    ];
+
     try {
         const res = await fetch("/api/users/stats", {
             headers: {
@@ -10,21 +26,31 @@ export const getStats = createAsyncThunk("/stats/get", async () => {
         });
 
         const data = await res.json();
+        
+        type Stat = {
+            _id: number;
+            total: number;
+        }
 
-        return data;
+        const stats = data.sort((a: Stat, b: Stat) => a._id - b._id).map((el: Stat) => ({
+            name: MONTHS[el._id - 1],
+            "New User": el.total
+        }))
+
+        return stats;
     } catch (err) {
         console.log(err);
     }
 });
 
 type InitialState = {
-    _id: number;
-    total: number;
+    name: string;
+    "New User": string;
 }[];
 
 const initialState: InitialState = [{
-    _id: 0,
-    total: 0
+    name: null!,
+    "New User": null!
 }];
 
 const slice = createSlice({
