@@ -1,5 +1,9 @@
 import { InfoOutlined, PlayArrow } from "@mui/icons-material";
 import * as React from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getRandomMovie } from "../../redux/movieSlice";
+import { AppDispatch, RootState } from "../../redux/store";
 import "./featured.scss";
 
 interface IFeaturedProps {
@@ -7,6 +11,22 @@ interface IFeaturedProps {
 }
 
 const Featured: React.FunctionComponent<IFeaturedProps> = ({ type }) => {
+
+  const dispatch = useDispatch<AppDispatch>();
+  const movie = useSelector((state: RootState) => state.movie);
+
+  useEffect(() => {
+
+    dispatch(getRandomMovie(type));
+
+    return () => {
+
+    }
+  }, [type])
+
+  console.log(movie);
+
+
   return (
     <div className="featured">
       {type && (
@@ -31,19 +51,16 @@ const Featured: React.FunctionComponent<IFeaturedProps> = ({ type }) => {
         </div>
       )}
       <img
-        src="https://images.pexels.com/photos/6899260/pexels-photo-6899260.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+        src={movie.img}
         alt=""
       />
       <div className="info">
         <img
-          src="https://occ-0-1432-1433.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABUZdeG1DrMstq-YKHZ-dA-cx2uQN_YbCYx7RABDk0y7F8ZK6nzgCz4bp5qJVgMizPbVpIvXrd4xMBQAuNe0xmuW2WjoeGMDn1cFO.webp?r=df1"
+          src={movie.imgTitle}
           alt=""
         />
         <span className="desc">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam ex
-          culpa consequatur ipsa cum ullam dolor eius necessitatibus accusantium
-          iste nobis, asperiores laborum possimus in explicabo maxime impedit
-          excepturi! Aliquam?
+          {movie.desc}
         </span>
         <div className="buttons">
           <button className="play">
