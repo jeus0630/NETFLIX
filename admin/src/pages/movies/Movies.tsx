@@ -6,7 +6,7 @@ import { DeleteOutline } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { AppDispatch, RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { getList } from '../../redux/movieListSlice';
+import { deleteMovie, getList } from '../../redux/movieListSlice';
 interface IProductsProps {
 }
 
@@ -24,6 +24,17 @@ const Products: React.FunctionComponent<IProductsProps> = (props) => {
         }
 
     }, []);
+
+    const deleteHandler = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+        const target = e.target;
+
+        if (target instanceof SVGSVGElement) {
+
+            const id = target.dataset.id;
+
+            id && dispatch(deleteMovie(id));
+        }
+    }
 
     const columns: GridColDef[] = [
         { field: "_id", headerName: 'ID', width: 90 },
@@ -46,7 +57,7 @@ const Products: React.FunctionComponent<IProductsProps> = (props) => {
                     <Link to={`/movie/${params.row.id}`}>
                         <button className="product-list-edit">Edit</button>
                     </Link>
-                    <DeleteOutline className='product-list-delete'></DeleteOutline>
+                    <DeleteOutline data-id={`${params.row.id}`} className='product-list-delete' onClick={deleteHandler}></DeleteOutline>
                 </>
             )
         }

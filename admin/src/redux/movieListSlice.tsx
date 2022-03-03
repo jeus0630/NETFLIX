@@ -17,6 +17,23 @@ export const getList = createAsyncThunk("/movieList/get", async () => {
 
 });
 
+export const deleteMovie = createAsyncThunk("/movie/delete", async (id: string) => {
+    try{
+        const res = await fetch(`/api/movies/${id}`,{
+            method : 'DELETE',
+            headers: {
+                token: "barere " + JSON.parse(localStorage.getItem('user') as string).token
+            }
+        });
+        const data = await res.json();
+
+        return id;
+    }catch(err){
+        console.log(err);
+    
+    }
+})
+
 type Movies = {
     _id: string;
     title: string;
@@ -74,6 +91,11 @@ const slice = createSlice({
             }))
 
             state.movies = movies;
+        })
+        .addCase(deleteMovie.fulfilled, (state,action) => {
+            state.movies = state.movies.filter(el => {
+                return el._id !== action.payload;
+            })
         })
     },
 });
