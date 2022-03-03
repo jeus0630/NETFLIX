@@ -1,62 +1,66 @@
 import { Publish } from '@mui/icons-material';
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Chart from '../../components/chart/Chart';
 import "./movie.scss";
 
 interface IProductProps {
 }
 
+type Location = {
+    state: {
+        createdAt: string;
+        desc: string;
+        genre: string;
+        id: string;
+        img: string;
+        imgSm: string;
+        imgTitle: string;
+        isSeries: boolean;
+        limit: string;
+        title: string;
+        trailer: string;
+        updatedAt: string;
+        video: string;
+        year: string;
+        __v: number;
+        _id: string;
+    }
+}
+
 const Product: React.FunctionComponent<IProductProps> = (props) => {
 
     const navigate = useNavigate();
-
-    const data = [
-        {
-            name: "Jan",
-            "Sales": 4000,
-        },
-        {
-            name: "Feb",
-            "Sales": 3000,
-        },
-        {
-            name: "Mar",
-            "Sales": 4000,
-        }
-    ];
+    const location = useLocation() as Location;
 
     return (
         <div className="product">
             <div className="product-title-container">
-                <h1 className="product-title">Product</h1>
+                <h1 className="product-title">Movie</h1>
                 <button className="product-add-button" onClick={() => { navigate("/new-movie") }}>Create</button>
             </div>
             <div className="product-top">
-                <div className="product-top-left">
-                    <Chart propData={data} dataKey={"Sales"} title="Sales Performance"></Chart>
-                </div>
                 <div className="product-top-right">
                     <div className="product-info-top">
-                        <img src="https://images.pexels.com/photos/7156886/pexels-photo-7156886.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className="product-info-img" />
-                        <span className="product-name">Apple Airpods</span>
+                        <img src={location.state.img} alt="" className="product-info-img" />
+                        <span className="product-name">{location.state.desc}</span>
                     </div>
                     <div className="product-info-bottom">
                         <div className="product-info-item">
                             <span className="product-info-key">id:</span>
-                            <span className="product-info-value">123</span>
+                            <span className="product-info-value">{location.state.id}</span>
                         </div>
                         <div className="product-info-item">
-                            <span className="product-info-key">sales:</span>
-                            <span className="product-info-value">5123</span>
+                            <span className="product-info-key">genre:</span>
+                            <span className="product-info-value">{location.state.genre}</span>
                         </div>
                         <div className="product-info-item">
-                            <span className="product-info-key">active:</span>
-                            <span className="product-info-value">yes</span>
+                            <span className="product-info-key">year:</span>
+                            <span className="product-info-value">{location.state.year}</span>
                         </div>
                         <div className="product-info-item">
-                            <span className="product-info-key">in stock</span>
-                            <span className="product-info-value">no</span>
+                            <span className="product-info-key">limit:</span>
+                            <span className="product-info-value">{location.state.limit}</span>
                         </div>
                     </div>
                 </div>
@@ -64,22 +68,22 @@ const Product: React.FunctionComponent<IProductProps> = (props) => {
             <div className="product-bottom">
                 <form action="" className="product-form">
                     <div className="product-form-left">
-                        <label htmlFor="">Product Name</label>
-                        <input type="text" placeholder='Apple Airpods' />
-                        <label htmlFor="">In Stock</label>
-                        <select name="inStock" id="inStock">
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                        <label htmlFor="">Active</label>
-                        <select name="active" id="active">
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
+                        <label htmlFor="">Movie Title</label>
+                        <input type="text" placeholder={location.state.title} />
+                        <label htmlFor="">Year</label>
+                        <input type="text" placeholder={location.state.year}/>
+                        <label htmlFor="">Genre</label>
+                        <input type="text" placeholder={location.state.genre}/>
+                        <label htmlFor="">Limit</label>
+                        <input type="text" placeholder={location.state.limit}/>
+                        <label htmlFor="">Trailer</label>
+                        <input type="file" placeholder={location.state.trailer}/>
+                        <label htmlFor="">Video</label>
+                        <input type="file" placeholder={location.state.video}/>
                     </div>
                     <div className="product-form-right">
                         <div className="product-upload">
-                            <img src="https://images.pexels.com/photos/7156886/pexels-photo-7156886.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className="product-upload-img" />
+                            <img src={location.state.img} alt="" className="product-upload-img" />
                             <label htmlFor="file">
                                 <Publish></Publish>
                             </label>

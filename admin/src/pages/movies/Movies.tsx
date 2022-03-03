@@ -54,7 +54,7 @@ const Products: React.FunctionComponent<IProductsProps> = (props) => {
         {
             field: "action", headerName: "Action", width: 150, renderCell: (params) => (
                 <>
-                    <Link to={`/movie/${params.row.id}`}>
+                    <Link to={`/movie/${params.row.id}`} state={params.row}>
                         <button className="product-list-edit">Edit</button>
                     </Link>
                     <DeleteOutline data-id={`${params.row.id}`} className='product-list-delete' onClick={deleteHandler}></DeleteOutline>
