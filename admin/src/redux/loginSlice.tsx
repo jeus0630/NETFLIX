@@ -27,7 +27,7 @@ type InitialState = {
 
 const initialState: InitialState = {
     isLogIn: window.localStorage.getItem('user') ? true : false,
-    isPending: false
+    isPending: false,
 };
 
 const slice = createSlice({
@@ -41,6 +41,7 @@ const slice = createSlice({
                 state.isPending = true;
             })
             .addCase(postLogin.fulfilled, (state, action) => {
+
                 state.isPending = false;
 
                 if (action.payload.isAdmin) {
@@ -48,6 +49,8 @@ const slice = createSlice({
                     window.localStorage.setItem('user', JSON.stringify(action.payload));
                 }
                 else alert('You are not Authenticated');
+
+                window.location.href = "/";
             })
             .addCase(postLogin.rejected, (state) => {
                 state.isPending = false;
