@@ -1,11 +1,15 @@
 import * as React from 'react';
 import "./topbar.scss";
 import { NotificationsNone, Language, Settings } from '@mui/icons-material';
+import { useLocation } from 'react-router-dom';
 
 interface ITopbarProps {
 }
 
 const Topbar: React.FunctionComponent<ITopbarProps> = (props) => {
+    const location = useLocation();
+    if (location.pathname === '/login') return null;
+
     return (
         <div className="top-bar">
             <div className="top-bar-wrapper">

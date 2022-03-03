@@ -1,12 +1,15 @@
 import * as React from 'react';
 import "./sidebar.scss";
 import { LineStyle, Timeline, TrendingUp, PermIdentity, Storefront, AttachMoney, BarChart, MailOutline, DynamicFeed, ChatBubbleOutline, WorkOutline, Report, PlayCircleOutline } from '@mui/icons-material';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 interface ISidebarProps {
 }
 
 const Sidebar: React.FunctionComponent<ISidebarProps> = (props) => {
+    const location = useLocation();
+    if (location.pathname === '/login') return null;
+
     return (
         <div className='side-bar'>
             <div className="side-bar-wrapper">

@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import stats from "./statSlice";
+import login from "./loginSlice";
 
 export const store = configureStore({
     reducer: {
-        stats
+        stats,
+        login
     }
 })
 

@@ -2,7 +2,7 @@ import { Publish } from '@mui/icons-material';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Chart from '../../components/chart/Chart';
-import "./product.scss";
+import "./movie.scss";
 
 interface IProductProps {
 }
@@ -83,7 +83,7 @@ const Product: React.FunctionComponent<IProductProps> = (props) => {
                             <label htmlFor="file">
                                 <Publish></Publish>
                             </label>
-                            <input type="file" id="file" style={{display:"none"}}/>
+                            <input type="file" id="file" style={{ display: "none" }} />
                         </div>
                         <button className="product-button">
                             Update

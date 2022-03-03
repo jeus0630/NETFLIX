@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import "./products.scss";
+import "./movies.scss";
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 import { DeleteOutline } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
