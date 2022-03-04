@@ -18,9 +18,9 @@ export const getList = createAsyncThunk("/movieList/get", async () => {
 });
 
 export const deleteMovie = createAsyncThunk("/movie/delete", async (id: string) => {
-    try{
-        const res = await fetch(`/api/movies/${id}`,{
-            method : 'DELETE',
+    try {
+        const res = await fetch(`/api/movies/${id}`, {
+            method: 'DELETE',
             headers: {
                 token: "barere " + JSON.parse(localStorage.getItem('user') as string).token
             }
@@ -28,9 +28,31 @@ export const deleteMovie = createAsyncThunk("/movie/delete", async (id: string) 
         const data = await res.json();
 
         return id;
-    }catch(err){
+    } catch (err) {
         console.log(err);
-    
+
+    }
+})
+
+export const createMovie = createAsyncThunk("/movie/post", async (param: any) => {
+    try {
+        const res = await fetch(`/api/movies/`, {
+            method: 'POST',
+            headers: {
+                token: "barere " + JSON.parse(localStorage.getItem('user') as string).token,
+                'Content-Type': 'application/JSON'
+            },
+            body: JSON.stringify(param)
+        })
+
+        const data = await res.json();
+
+        console.log(data);
+
+    }
+    catch (err) {
+        console.log(err);
+
     }
 })
 
@@ -92,11 +114,14 @@ const slice = createSlice({
 
             state.movies = movies;
         })
-        .addCase(deleteMovie.fulfilled, (state,action) => {
-            state.movies = state.movies.filter(el => {
-                return el._id !== action.payload;
+            .addCase(deleteMovie.fulfilled, (state, action) => {
+                state.movies = state.movies.filter(el => {
+                    return el._id !== action.payload;
+                })
             })
-        })
+            .addCase(createMovie.fulfilled, (state, action) => {
+
+            })
     },
 });
 

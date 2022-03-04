@@ -1,52 +1,139 @@
 import * as React from 'react';
 import "./newMovie.scss";
 import { useState } from "react";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from '../../firebase';
+import { create } from '@mui/material/styles/createTransitions';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
+import { createMovie } from '../../redux/movieListSlice';
+import { useEffect } from "react";
 
 interface INewProductProps {
 }
 
 type Movie = {
-    image: string;
-    imgTitle: string;
-    imgSm: string;
-    title: string;
-    description: string;
-    year: string;
-    genre: string;
-    duration: string;
-    limit: string;
-    isSeries: boolean;
-    trailer: string;
-    video: string;
+    [key: string]: any;
 }
 
 const NewProduct: React.FunctionComponent<INewProductProps> = (props) => {
 
-    const [movie, setMovie] = useState<Movie>({
-        image: "",
-        imgTitle: "",
-        imgSm: "",
-        title: "",
-        description: "",
-        year: "",
-        genre: "",
-        duration: "",
-        limit: "",
-        isSeries: false,
-        trailer: "",
-        video: ""
-    });
+    const [movie, setMovie] = useState<Movie>({ uploaded: 0 });
+    const dispatch = useDispatch<AppDispatch>();
+
+    useEffect(() => {
+
+        if (movie.uploaded === 5) dispatch(createMovie(movie));
+
+
+        return () => {
+
+        }
+    }, [movie.uploaded])
+
 
     const changeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
 
-        setMovie({
-            ...movie,
-            [name]: value
-        })
+        if (e.target.type === "file") {
+            const target = e.target as HTMLInputElement;
+            const files = target.files;
+            let file
+            if (files) file = files[0];
+
+            setMovie({
+                ...movie,
+                [name]: file,
+            })
+
+        } else {
+            setMovie({
+                ...movie,
+                [name]: value
+            })
+        }
     }
 
-    console.log(movie);
+    const upload = (param: { file: any; label: string; }[]) => {
+
+        param.forEach((item, idx) => {
+
+            /** @type {any} */
+            const file = item.file as any;
+            const type = file.type;
+
+            const metadata = {
+                contentType: type
+            };
+
+            const fileName = new Date().getTime() + item.label + file.name;
+
+            const storageRef = ref(storage, `/items/${fileName}`);
+            const uploadTask = uploadBytesResumable(storageRef, file, metadata);
+
+            uploadTask.on('state_changed',
+                (snapshot) => {
+
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + progress + '% done');
+                    switch (snapshot.state) {
+                        case 'paused':
+                            console.log('Upload is paused');
+                            break;
+                        case 'running':
+                            console.log('Upload is running');
+                            break;
+                    }
+                },
+                (error) => {
+                    switch (error.code) {
+                        case 'storage/unauthorized':
+                            break;
+                        case 'storage/canceled':
+                            break;
+                        case 'storage/unknown':
+                            break;
+                    }
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+
+                        setMovie(prev => ({
+                            ...prev,
+                            uploaded: prev.uploaded + 1,
+                            [item.label]: downloadURL
+                        }))
+                    });
+                }
+            );
+        })
+
+
+    }
+
+    const uploadHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+
+        const files = [
+            {
+                file: movie.img, label: "img"
+            },
+            {
+                file: movie.imgTitle, label: "imgTitle"
+            },
+            {
+                file: movie.imgSm, label: "imgSm"
+            },
+            {
+                file: movie.trailer, label: "trailer"
+            },
+            {
+                file: movie.video, label: "video"
+            }
+        ]
+
+        upload(files);
+    }
 
 
     return (
@@ -59,7 +146,7 @@ const NewProduct: React.FunctionComponent<INewProductProps> = (props) => {
                     <input
                         type="file"
                         id="img"
-                        name="image"
+                        name="img"
                         onChange={changeHandler}
                     />
                 </div>
@@ -87,7 +174,7 @@ const NewProduct: React.FunctionComponent<INewProductProps> = (props) => {
                 </div>
                 <div className="add-movie-item">
                     <label>Description</label>
-                    <input type="text" placeholder='Description' name="description" onChange={changeHandler} />
+                    <input type="text" placeholder='Description' name="desc" onChange={changeHandler} />
                 </div>
                 <div className="add-movie-item">
                     <label>Year</label>
@@ -120,7 +207,8 @@ const NewProduct: React.FunctionComponent<INewProductProps> = (props) => {
                     <label>Video</label>
                     <input type="file" name="video" onChange={changeHandler} />
                 </div>
-                <button className="add-movie-button">
+
+                <button className="add-movie-button" onClick={uploadHandler}>
                     Create
                 </button>
             </form>
