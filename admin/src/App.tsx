@@ -9,7 +9,7 @@ import User from './pages/user/User';
 import NewUser from './pages/newUser/NewUser';
 import Movies from './pages/movies/Movies';
 import Movie from './pages/movie/Movie';
-import NewMovie from './pages/newProduct/NewProduct';
+import NewMovie from './pages/newMovie/NewMovie';
 import NotFound from './pages/notFound/NotFound';
 import Login from './pages/login/Login';
 import { RootState } from './redux/store';
