@@ -36,6 +36,7 @@
       box-shadow: 0px 0px 15px -10px #000;
 
       .product-info-top {
+        display: flex;
         .product-info-img {
           width: 40px;
           height: 40px;
@@ -46,6 +47,15 @@
 
         .product-name {
           font-weight: 600;
+        }
+
+        .product-title {
+          display: block;
+          font-weight: 600;
+          font-style: normal;
+        }
+
+        .product-desc {
         }
       }
 
