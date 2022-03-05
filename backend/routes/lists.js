@@ -62,4 +62,20 @@ router.get("/",verify, async(req,res)=>{
     }
 })
 
+//UPDATE
+router.put("/:id", verify, async (req,res)=>{
+    if(req.user.isAdmin){
+        try{
+            const updatedLists = await List.findByIdAndUpdate(req.params.id,{
+                $set: req.body
+            },{new: true});
+            res.status(201).json(updatedLists);
+        }catch(err){
+            res.status(500).json(err);
+        }
+    }else{
+        res.status(403).json("You are not allowed");
+    }
+});
+
 module.exports = router;
