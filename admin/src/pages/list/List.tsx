@@ -2,7 +2,7 @@ import { Publish } from '@mui/icons-material';
 import * as React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Chart from '../../components/chart/Chart';
-import "./movie.scss";
+import "./list.scss";
 
 interface IProductProps {
 }

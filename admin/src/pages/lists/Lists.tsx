@@ -1,23 +1,24 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import "./movies.scss";
+import "./lists.scss";
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 import { DeleteOutline } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { AppDispatch, RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteMovie, getList } from '../../redux/movieListSlice';
+import { getLists } from '../../redux/listsSlice';
 interface IProductsProps {
 }
 
 
 const Products: React.FunctionComponent<IProductsProps> = (props) => {
     const dispatch = useDispatch<AppDispatch>();
-    const rows = useSelector((state: RootState) => state.movies.movies)
+    const rows = useSelector((state: RootState) => state.lists.lists);
 
     useEffect(() => {
 
-        dispatch(getList());
+        dispatch(getLists());
 
         return () => {
 
@@ -39,18 +40,14 @@ const Products: React.FunctionComponent<IProductsProps> = (props) => {
     const columns: GridColDef[] = [
         { field: "_id", headerName: 'ID', width: 90 },
         {
-            field: "title", headerName: 'Movie', width: 200, renderCell: (params) => (
+            field: "title", headerName: 'Title', width: 200, renderCell: (params) => (
                 <div className='product-list-user'>
-                    <img src={params.row.img} alt="" className='product-list-img' />
                     {params.row.title}
                 </div>
             ),
         },
-        { field: "year", headerName: 'Year', width: 200 },
-        { field: "limit", headerName: 'Limit', width: 120 },
-        {
-            field: "isSeries", headerName: 'Series', width: 160
-        },
+        { field: "genre", headerName: 'Genre', width: 200 },
+        { field: "type", headerName: 'Type', width: 120 },
         {
             field: "action", headerName: "Action", width: 150, renderCell: (params) => (
                 <>
