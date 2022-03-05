@@ -15,6 +15,7 @@ import Login from './pages/login/Login';
 import { RootState } from './redux/store';
 import { useSelector } from "react-redux";
 import Lists from './pages/lists/Lists';
+import List from './pages/list/List';
 
 function App() {
 
@@ -38,7 +39,7 @@ function App() {
                 <Route path="/movie/:id" element={<Movie></Movie>}></Route>
                 <Route path="/new-movie" element={<NewMovie></NewMovie>}></Route>
                 <Route path="/lists" element={<Lists></Lists>}></Route>
-                <Route path="/list/:id" element={<Movie></Movie>}></Route>
+                <Route path="/list/:id" element={<List></List>}></Route>
                 <Route path="/new-movie" element={<NewMovie></NewMovie>}></Route>
                 <Route path="/*" element={<NotFound></NotFound>}></Route>
               </Routes>
