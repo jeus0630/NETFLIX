@@ -3,12 +3,17 @@ import * as React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Chart from '../../components/chart/Chart';
 import "./list.scss";
-import {useState} from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from '../../redux/store';
+import { putLists } from '../../redux/listsSlice';
+import {setListVal} from '../../redux/listsSlice';
 
 interface IProductProps {
 }
 
 type Location = {
+    pathname: string;
     state: {
         _id: string;
         id: string;
@@ -32,6 +37,18 @@ const Product: React.FunctionComponent<IProductProps> = (props) => {
 
     const navigate = useNavigate();
     const location = useLocation() as Location;
+    const dispatch = useDispatch<AppDispatch>();
+
+    const state = useSelector((state: RootState) => state.lists.list);
+
+    useEffect(() => {
+
+        dispatch(setListVal(location.state));
+
+        return () => {
+
+        }
+    }, [])
 
     const [list, setList] = useState<List>({
         title: '',
@@ -40,8 +57,8 @@ const Product: React.FunctionComponent<IProductProps> = (props) => {
     })
 
     const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target;
-        
+        const { name, value } = e.target;
+
         setList({
             ...list,
             [name]: value
@@ -50,7 +67,14 @@ const Product: React.FunctionComponent<IProductProps> = (props) => {
 
     const clickHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-        
+        const id = location.pathname.split('list/')[1];
+
+        const data = {
+            id,
+            list
+        }
+
+        dispatch(putLists(data));
     }
 
     return (
@@ -62,20 +86,20 @@ const Product: React.FunctionComponent<IProductProps> = (props) => {
             <div className="product-top">
                 <div className="product-top-right">
                     <div className="product-info-top">
-                        <span className="product-name">{location.state.title}</span>
+                        <span className="product-name">{state.title}</span>
                     </div>
                     <div className="product-info-bottom">
                         <div className="product-info-item">
                             <span className="product-info-key">id:</span>
-                            <span className="product-info-value">{location.state.id}</span>
+                            <span className="product-info-value">{state.id}</span>
                         </div>
                         <div className="product-info-item">
                             <span className="product-info-key">genre:</span>
-                            <span className="product-info-value">{location.state.genre}</span>
+                            <span className="product-info-value">{state.genre}</span>
                         </div>
                         <div className="product-info-item">
                             <span className="product-info-key">type:</span>
-                            <span className="product-info-value">{location.state.type}</span>
+                            <span className="product-info-value">{state.type}</span>
                         </div>
                     </div>
                 </div>
@@ -84,11 +108,11 @@ const Product: React.FunctionComponent<IProductProps> = (props) => {
                 <form action="" className="product-form">
                     <div className="product-form-left">
                         <label htmlFor="">List Title</label>
-                        <input type="text" placeholder={location.state.title} onChange={changeHandler} name="title"/>
+                        <input type="text" placeholder={state.title} onChange={changeHandler} name="title" />
                         <label htmlFor="">Type</label>
-                        <input type="text" placeholder={location.state.type} onChange={changeHandler} name="type"/>
+                        <input type="text" placeholder={state.type} onChange={changeHandler} name="type" />
                         <label htmlFor="">Genre</label>
-                        <input type="text" placeholder={location.state.genre} onChange={changeHandler} name="genre"/>
+                        <input type="text" placeholder={state.genre} onChange={changeHandler} name="genre" />
                     </div>
                     <div className="product-form-right">
                         <button className="product-button" onClick={clickHandler}>
