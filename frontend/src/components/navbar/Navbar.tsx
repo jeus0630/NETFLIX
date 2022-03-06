@@ -1,14 +1,18 @@
 import { ArrowDropDown, Notifications, Search } from "@mui/icons-material";
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {AppDispatch} from "../../redux/store";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./navbar.scss";
+import { setLogout } from "../../redux/userSlice";
 
 interface INavbarProps {}
 
 const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
   const [isScrolled, setIsScrolled] = useState(false);
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     window.addEventListener("scroll", () => {
       setIsScrolled(window.pageYOffset ? true : false);
@@ -16,6 +20,12 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
 
     return () => {};
   }, []);
+
+  const logoutHandler = () => {
+    dispatch(setLogout());
+    localStorage.removeItem("user");
+    navigate("/login");
+  }
 
   return (
       <nav className={isScrolled ? "navbar scrolled" : "navbar"}>
@@ -53,7 +63,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
             <ArrowDropDown className="icon"></ArrowDropDown>
             <div className="options">
               <span>Settings</span>
-              <span>Logout</span>
+              <span onClick={logoutHandler}>Logout</span>
             </div>
           </div>
         </div>

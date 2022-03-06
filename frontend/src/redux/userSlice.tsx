@@ -79,6 +79,9 @@ const slice = createSlice({
                 ...state,
                 ...initialState
             }
+        },
+        setLogout: (state) => {
+            state.isLogIn = false;
         }
     },
     extraReducers: (builder) => {
@@ -97,5 +100,5 @@ const slice = createSlice({
     },
 });
 
-export const { setInfo, resetState } = slice.actions;
+export const { setInfo, resetState, setLogout } = slice.actions;
 export default slice.reducer;
