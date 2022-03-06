@@ -3,12 +3,13 @@ import genreSlice from "./genreSlice";
 import listSlice from "./listSlice";
 import { combineReducers } from "redux";
 import movieSlice from "./movieSlice";
-
+import userSlice from "./userSlice";
 export const store = configureStore({
     reducer: {
         list: listSlice,
         genre: genreSlice,
-        movie: movieSlice
+        movie: movieSlice,
+        user: userSlice
     }
 })
 
