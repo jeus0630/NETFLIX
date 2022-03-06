@@ -1,6 +1,6 @@
 import { ArrowBackOutlined } from '@mui/icons-material';
 import * as React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import "./watch.scss";
 
 interface IWatchProps {
@@ -12,15 +12,15 @@ type Location = {
 
 const Watch: React.FunctionComponent<IWatchProps> = (props) => {
     const { state } = useLocation() as Location;
-
+    const navigate = useNavigate();
     return (
         <div className="watch">
-            <Link to="/">
-                <div className="back">
-                    <ArrowBackOutlined></ArrowBackOutlined>
-                    Home
-                </div>
-            </Link>
+
+            <div className="back" onClick={() => navigate(-1)}>
+                <ArrowBackOutlined></ArrowBackOutlined>
+                Back
+            </div>
+
             <video
                 src={state}
                 className="video"
