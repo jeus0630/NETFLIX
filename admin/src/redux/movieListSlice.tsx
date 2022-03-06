@@ -161,7 +161,7 @@ const slice = createSlice({
             const movies = action.payload.map(el => ({
                 ...el,
                 id: el._id
-            }))
+            })).reverse();
 
             state.movies = movies;
         })

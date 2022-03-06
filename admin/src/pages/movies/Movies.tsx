@@ -13,7 +13,7 @@ interface IProductsProps {
 
 const Products: React.FunctionComponent<IProductsProps> = (props) => {
     const dispatch = useDispatch<AppDispatch>();
-    const rows = useSelector((state: RootState) => state.movies.movies)
+    const rows = useSelector((state: RootState) => state.movies.movies);
 
     useEffect(() => {
 
