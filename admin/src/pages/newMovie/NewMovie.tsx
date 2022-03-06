@@ -4,10 +4,11 @@ import { useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from '../../firebase';
 import { create } from '@mui/material/styles/createTransitions';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../redux/store';
-import { createMovie } from '../../redux/movieListSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../redux/store';
+import { createMovie, resetPending, setPending } from '../../redux/movieListSlice';
 import { useEffect } from "react";
+import LoadingSpin from "react-loading-spin";
 
 interface INewProductProps {
 }
@@ -20,6 +21,7 @@ const NewProduct: React.FunctionComponent<INewProductProps> = (props) => {
 
     const [movie, setMovie] = useState<Movie>({ uploaded: 0 });
     const dispatch = useDispatch<AppDispatch>();
+    const isPending = useSelector((state: RootState) => state.movies.isPending);
 
     useEffect(() => {
 
@@ -27,7 +29,7 @@ const NewProduct: React.FunctionComponent<INewProductProps> = (props) => {
 
 
         return () => {
-
+            dispatch(resetPending());
         }
     }, [movie.uploaded])
 
@@ -114,6 +116,8 @@ const NewProduct: React.FunctionComponent<INewProductProps> = (props) => {
     const uploadHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
 
+        dispatch(setPending());
+
         const files = [
             {
                 file: movie.img, label: "img"
@@ -138,6 +142,13 @@ const NewProduct: React.FunctionComponent<INewProductProps> = (props) => {
 
     return (
         <div className="new-movie">
+            {
+                isPending && (
+                    <div className="loading-spin">
+                        <LoadingSpin />
+                    </div>
+                )
+            }
             <h1 className="add-movie-title">New Movie</h1>
             <form className="add-movie-form">
 

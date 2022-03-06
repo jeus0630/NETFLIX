@@ -96,7 +96,8 @@ type Movie = {
 
 type InitialState = {
     movies: Movie[],
-    movie: Movie
+    movie: Movie,
+    isPending: boolean
 };
 
 const initialState: InitialState = {
@@ -137,7 +138,8 @@ const initialState: InitialState = {
         createdAt: "",
         updatedAt: "",
         __v: 0
-    }
+    },
+    isPending: false
 };
 
 const slice = createSlice({
@@ -146,6 +148,12 @@ const slice = createSlice({
     reducers: {
         setMovie: (state, action: PayloadAction<Movie>) => {
             state.movie = action.payload;
+        },
+        setPending: (state) => {
+            state.isPending = true;
+        },
+        resetPending: (state) => {
+            state.isPending = false;
         }
     },
     extraReducers: (builder) => {
@@ -164,10 +172,13 @@ const slice = createSlice({
             })
             .addCase(updateMovie.fulfilled, (state, action) => {
                 state.movie = action.payload;
+                state.isPending = false;
             })
-
+            .addCase(createMovie.fulfilled, (state, action) => {
+                state.isPending = false;
+            })
     },
 });
 
-export const { setMovie } = slice.actions;
+export const { setMovie, setPending, resetPending } = slice.actions;
 export default slice.reducer;

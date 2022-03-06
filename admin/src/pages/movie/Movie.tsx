@@ -8,7 +8,8 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from '../../firebase';
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from '../../redux/store';
-import { setMovie, updateMovie } from '../../redux/movieListSlice';
+import { resetPending, setMovie, setPending, updateMovie } from '../../redux/movieListSlice';
+import LoadingSpin from "react-loading-spin";
 
 interface IProductProps {
 }
@@ -44,6 +45,7 @@ const Product: React.FunctionComponent<IProductProps> = (props) => {
     });
     const dispatch = useDispatch<AppDispatch>();
     const movie = useSelector((state: RootState) => state.movies.movie);
+    const isPending = useSelector((state: RootState) => state.movies.isPending);
 
     useEffect(() => {
 
@@ -65,6 +67,10 @@ const Product: React.FunctionComponent<IProductProps> = (props) => {
 
     useEffect(() => {
         dispatch(setMovie(location.state));
+
+        return () => {
+            dispatch(resetPending());
+        }
     }, [])
 
     const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -150,6 +156,8 @@ const Product: React.FunctionComponent<IProductProps> = (props) => {
     const uploadHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
 
+        dispatch(setPending());
+
         const files = [
             {
                 file: info.img, label: "img"
@@ -167,6 +175,13 @@ const Product: React.FunctionComponent<IProductProps> = (props) => {
 
     return (
         <div className="product">
+            {
+                isPending && (
+                    <div className="loading-spin">
+                        <LoadingSpin />
+                    </div>
+                )
+            }
             <div className="product-title-container">
                 <h1 className="product-title">Movie</h1>
                 <button className="product-add-button" onClick={() => { navigate("/new-movie") }}>Create</button>
