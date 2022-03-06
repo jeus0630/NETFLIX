@@ -33,8 +33,6 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home></Home>}></Route>
                 <Route path="/login" element={<Navigate replace to="/"></Navigate>}></Route>
-                <Route path="/users" element={<UserList></UserList>}></Route>
-                <Route path="/user/:id" element={<User></User>}></Route>
                 <Route path="/new-user" element={<NewUser></NewUser>}></Route>
                 <Route path="/movies" element={<Movies></Movies>}></Route>
                 <Route path="/movie/:id" element={<Movie></Movie>}></Route>
