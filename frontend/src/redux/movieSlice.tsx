@@ -64,18 +64,11 @@ const slice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(getRandomMovie.fulfilled, (state, action: PayloadAction<InitialState>) => {
-            console.log('Success');
             return {
                 ...state,
                 ...action.payload
             }
         })
-            .addCase(getRandomMovie.pending, (state, action) => {
-                console.log("pending...");
-            })
-            .addCase(getRandomMovie.rejected, (state, acton) => {
-                console.log("failed");
-            })
     },
 });
 
