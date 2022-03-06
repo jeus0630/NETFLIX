@@ -23,6 +23,26 @@ export const registerUser = createAsyncThunk("/api/auth/register", async (info: 
 
 });
 
+export const logInUser = createAsyncThunk("/api/auth/login", async (data: {
+    email: string;
+    password: string;
+}) => {
+    try {
+        const res = await fetch("/api/auth/login", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        const fetchedData = await res.json();
+
+        return fetchedData;
+    } catch (err) {
+        console.log(err);
+    }
+})
+
 export type Info = {
     email: string;
     password: string;
@@ -32,6 +52,8 @@ export type Info = {
 type InitialState = {
     info: Info;
     isCreated: boolean;
+    isLogIn: boolean;
+    wrongInfo: boolean;
 };
 
 const initialState: InitialState = {
@@ -40,7 +62,9 @@ const initialState: InitialState = {
         password: '',
         step: 0
     },
-    isCreated: false
+    isCreated: false,
+    isLogIn: localStorage.getItem("user")? true : false,
+    wrongInfo: false
 };
 
 const slice = createSlice({
@@ -61,6 +85,14 @@ const slice = createSlice({
         builder
             .addCase(registerUser.fulfilled, (state, action) => {
                 state.isCreated = true;
+            })
+            .addCase(logInUser.fulfilled, (state, action) => {
+                if (action.payload.token) {
+                    localStorage.setItem('user', JSON.stringify("barer " + action.payload.token));
+                    state.isLogIn = true;
+                } else {
+                    state.wrongInfo = true;
+                }
             })
     },
 });

@@ -81,6 +81,11 @@
           color: #fff;
           cursor: pointer;
         }
+
+        &.warning {
+          color: red;
+          font-size: 13px;
+        }
       }
 
       small {
