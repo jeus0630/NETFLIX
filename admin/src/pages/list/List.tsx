@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from '../../redux/store';
 import { putLists } from '../../redux/listsSlice';
-import {setListVal} from '../../redux/listsSlice';
+import { setListVal } from '../../redux/listsSlice';
 
 interface IProductProps {
 }
@@ -81,7 +81,7 @@ const Product: React.FunctionComponent<IProductProps> = (props) => {
         <div className="product">
             <div className="product-title-container">
                 <h1 className="product-title">List</h1>
-                <button className="product-add-button" onClick={() => { navigate("/new-movie") }}>Create</button>
+                <button className="product-add-button" onClick={() => { navigate("/new-list") }}>Create</button>
             </div>
             <div className="product-top">
                 <div className="product-top-right">

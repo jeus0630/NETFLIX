@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { AppDispatch, RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteMovie, getList } from '../../redux/movieListSlice';
-import { getLists } from '../../redux/listsSlice';
+import { deleteLists, getLists } from '../../redux/listsSlice';
 interface IProductsProps {
 }
 
@@ -33,7 +33,7 @@ const Products: React.FunctionComponent<IProductsProps> = (props) => {
 
             const id = target.dataset.id;
 
-            id && dispatch(deleteMovie(id));
+            id && dispatch(deleteLists(id));
         }
     }
 

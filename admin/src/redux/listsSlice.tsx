@@ -58,6 +58,47 @@ export const putLists = createAsyncThunk("/lists/put", async (data: {
     }
 })
 
+export const createLists = createAsyncThunk("/lists/post", async (data: {
+    title: string;
+    type: string;
+    genre: string;
+    content: string[]
+}) => {
+    try {
+        const res = await fetch("/api/lists/", {
+            method: "POST",
+            headers: {
+                token: "barere " + JSON.parse(localStorage.getItem('user') as string).token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        const fetchedData = await res.json();
+
+        return fetchedData;
+    } catch (err) {
+        console.log(err);
+    }
+})
+
+export const deleteLists = createAsyncThunk("/lists/delete", async (id: string) => {
+    try {
+        const res = await fetch(`/api/lists/${id}`, {
+            method: "DELETE",
+            headers: {
+                token: "barere " + JSON.parse(localStorage.getItem('user') as string).token,
+                'Content-Type': 'application/json'
+            }
+        })
+
+        const data = await res.json();
+
+        return id;
+    } catch (err) {
+        console.log(err);
+    }
+})
+
 type List = {
     _id: string;
     id: string;
@@ -118,6 +159,9 @@ const slice = createSlice({
         })
             .addCase(putLists.fulfilled, (state, action) => {
                 state.list = action.payload;
+            })
+            .addCase(deleteLists.fulfilled, (state, action) => {
+                state.lists = state.lists.filter(list => list._id !== action.payload);
             })
     },
 });
