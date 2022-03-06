@@ -56,7 +56,27 @@ export const createMovie = createAsyncThunk("/movie/post", async (param: any) =>
     }
 })
 
-type Movies = {
+
+export const updateMovie = createAsyncThunk("/movie/put", async ({ id, info }: { id: string, info: InitialState }) => {
+    try {
+        const res = await fetch(`/api/movies/${id}`, {
+            method: "PUT",
+            headers: {
+                token: "barere " + JSON.parse(localStorage.getItem('user') as string).token,
+                'Content-Type': 'application/JSON'
+            },
+            body: JSON.stringify(info)
+        });
+        const fetchedData = await res.json();
+
+        return fetchedData;
+    } catch (err) {
+        console.log(err);
+    }
+})
+
+type Movie = {
+    id: string;
     _id: string;
     title: string;
     desc: string;
@@ -72,15 +92,17 @@ type Movies = {
     createdAt: string;
     updatedAt: string;
     __v: number;
-}[]
+}
 
 type InitialState = {
-    movies: Movies
+    movies: Movie[],
+    movie: Movie
 };
 
 const initialState: InitialState = {
     movies: [
         {
+            id: "",
             _id: "",
             title: "",
             desc: "",
@@ -97,16 +119,37 @@ const initialState: InitialState = {
             updatedAt: "",
             __v: 0
         }
-    ]
+    ],
+    movie: {
+        id: "",
+        _id: "",
+        title: "",
+        desc: "",
+        img: "",
+        imgTitle: "",
+        imgSm: "",
+        trailer: "",
+        video: "",
+        year: "",
+        limit: "",
+        genre: "",
+        isSeries: false,
+        createdAt: "",
+        updatedAt: "",
+        __v: 0
+    }
 };
 
 const slice = createSlice({
     name: "movies",
     initialState,
     reducers: {
+        setMovie: (state, action: PayloadAction<Movie>) => {
+            state.movie = action.payload;
+        }
     },
     extraReducers: (builder) => {
-        builder.addCase(getList.fulfilled, (state, action: PayloadAction<Movies>) => {
+        builder.addCase(getList.fulfilled, (state, action: PayloadAction<Movie[]>) => {
             const movies = action.payload.map(el => ({
                 ...el,
                 id: el._id
@@ -119,11 +162,12 @@ const slice = createSlice({
                     return el._id !== action.payload;
                 })
             })
-            .addCase(createMovie.fulfilled, (state, action) => {
-
+            .addCase(updateMovie.fulfilled, (state, action) => {
+                state.movie = action.payload;
             })
+
     },
 });
 
-export const { } = slice.actions;
+export const { setMovie } = slice.actions;
 export default slice.reducer;
