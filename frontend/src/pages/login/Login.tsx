@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "./login.scss";
 
 interface ILoginProps {
 }
 
 const Login: React.FunctionComponent<ILoginProps> = (props) => {
+
+    const navigate = useNavigate();
 
     return (
         <div className="login">
@@ -23,7 +26,7 @@ const Login: React.FunctionComponent<ILoginProps> = (props) => {
                     <input type="email" placeholder='Email or phone number' />
                     <input type="password" placeholder='Password' />
                     <button className="login-button">Sign In</button>
-                    <span>New to Netflix? <b>Sign up now.</b></span>
+                    <span>New to Netflix? <b onClick={()=>navigate('/register')}>Sign up now.</b></span>
                     <small>
                         This page is protected by Google reCAPTCHA to ensure you're not a bot. <b>Learn more.</b>
                     </small>
