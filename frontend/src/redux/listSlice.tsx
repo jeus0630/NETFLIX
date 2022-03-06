@@ -6,7 +6,7 @@ export const getList = createAsyncThunk("/lists/get", async () => {
     try {
         const res = await fetch("/api/lists", {
             headers: {
-                'token': 'barere eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMWI0OGFkMzc4MDJkMmMzNGRmNjhjYiIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NDYyMDA1NjEsImV4cCI6MTY0NjYzMjU2MX0.NWAZqIW3uOqK_hElLwvWzN6ByPsxbFRmSJQHxI8vAF4'
+                token: JSON.parse(localStorage.getItem("user") as string)
             }
         });
         const data = await res.json();
@@ -25,7 +25,7 @@ export const getRandomList = createAsyncThunk("/random-lists/get",
                 `/api/lists?${type ? "type=" + type : ""}${genre ? "&genre=" + genre : ""}`,
                 {
                     headers: {
-                        'token': 'barere eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMWI0OGFkMzc4MDJkMmMzNGRmNjhjYiIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NDYyMDA1NjEsImV4cCI6MTY0NjYzMjU2MX0.NWAZqIW3uOqK_hElLwvWzN6ByPsxbFRmSJQHxI8vAF4'
+                        token: JSON.parse(localStorage.getItem("user") as string)
                     }
                 });
             const data = await res.json();

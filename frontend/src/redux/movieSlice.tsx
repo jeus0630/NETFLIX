@@ -8,7 +8,7 @@ export const getRandomMovie = createAsyncThunk('/random-movie/get',
                 `api/movies/random?type=${type}`,
                 {
                     headers: {
-                        'token': 'barere eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMWI0OGFkMzc4MDJkMmMzNGRmNjhjYiIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NDYyMDA1NjEsImV4cCI6MTY0NjYzMjU2MX0.NWAZqIW3uOqK_hElLwvWzN6ByPsxbFRmSJQHxI8vAF4'
+                        token: JSON.parse(localStorage.getItem("user") as string)
                     }
                 });
 

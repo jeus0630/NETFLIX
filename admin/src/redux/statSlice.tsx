@@ -21,7 +21,7 @@ export const getStats = createAsyncThunk("/stats/get", async () => {
     try {
         const res = await fetch("/api/users/stats", {
             headers: {
-                token: "barere eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMWYwOGMzYTBhOTQ3YzdkMWUyOTJiNyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY0NjIwMTQ0NSwiZXhwIjoxNjQ2NjMzNDQ1fQ.nNNpWj7Y-RNTNIXOpfzOHKutfasiXtmHFHbZVGWzZvU"
+                token: "barere " + JSON.parse(localStorage.getItem('user') as string).token
             }
         });
 
@@ -48,7 +48,7 @@ export const getNewUsers = createAsyncThunk("/new-users/get", async () => {
     try {
         const res = await fetch("/api/users?new=true", {
             headers: {
-                token: "barere eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMWYwOGMzYTBhOTQ3YzdkMWUyOTJiNyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY0NjIwMTQ0NSwiZXhwIjoxNjQ2NjMzNDQ1fQ.nNNpWj7Y-RNTNIXOpfzOHKutfasiXtmHFHbZVGWzZvU"
+                token: "barere " + JSON.parse(localStorage.getItem('user') as string).token
             }
         });
 

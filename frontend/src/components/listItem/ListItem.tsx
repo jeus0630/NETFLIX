@@ -55,7 +55,7 @@ const ListItem: React.FunctionComponent<IListItemProps> = ({ index, id }) => {
             try {
                 const res = await fetch(`/api/movies/${id}`, {
                     headers: {
-                        'token': 'barere eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMWI0OGFkMzc4MDJkMmMzNGRmNjhjYiIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NDYyMDA1NjEsImV4cCI6MTY0NjYzMjU2MX0.NWAZqIW3uOqK_hElLwvWzN6ByPsxbFRmSJQHxI8vAF4'
+                        token: JSON.parse(localStorage.getItem("user") as string)
                     }
                 });
                 const data = await res.json();
