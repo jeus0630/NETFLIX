@@ -6,8 +6,9 @@ import "./list.scss";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from '../../redux/store';
-import { putLists } from '../../redux/listsSlice';
+import { putLists, resetPending } from '../../redux/listsSlice';
 import { setListVal } from '../../redux/listsSlice';
+import LoadingSpin from "react-loading-spin";
 
 interface IProductProps {
 }
@@ -38,7 +39,7 @@ const Product: React.FunctionComponent<IProductProps> = (props) => {
     const navigate = useNavigate();
     const location = useLocation() as Location;
     const dispatch = useDispatch<AppDispatch>();
-
+    const isPending = useSelector((state: RootState) => state.lists.isPending);
     const state = useSelector((state: RootState) => state.lists.list);
 
     useEffect(() => {
@@ -46,7 +47,7 @@ const Product: React.FunctionComponent<IProductProps> = (props) => {
         dispatch(setListVal(location.state));
 
         return () => {
-
+            dispatch(resetPending());
         }
     }, [])
 
@@ -79,6 +80,13 @@ const Product: React.FunctionComponent<IProductProps> = (props) => {
 
     return (
         <div className="product">
+            {
+                isPending && (
+                    <div className={"loading-spinner"}>
+                        <LoadingSpin />
+                    </div>
+                )
+            }
             <div className="product-title-container">
                 <h1 className="product-title">List</h1>
                 <button className="product-add-button" onClick={() => { navigate("/new-list") }}>Create</button>

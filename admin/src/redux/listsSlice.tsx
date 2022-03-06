@@ -115,7 +115,8 @@ type Lists = List[]
 
 type InitialState = {
     lists: Lists,
-    list: List
+    list: List,
+    isPending: Boolean
 };
 
 const initialState: InitialState = {
@@ -142,7 +143,8 @@ const initialState: InitialState = {
         updatedAt: "",
         __v: 0,
         _id: "",
-    }
+    },
+    isPending: false
 };
 
 const slice = createSlice({
@@ -151,20 +153,34 @@ const slice = createSlice({
     reducers: {
         setListVal: (state, action) => {
             state.list = action.payload;
+        },
+        resetPending: (state) => {
+            state.isPending = false;
         }
     },
     extraReducers: (builder) => {
         builder.addCase(getLists.fulfilled, (state, action: PayloadAction<Lists>) => {
             state.lists = action.payload;
         })
+            .addCase(putLists.pending, (state) => {
+                state.isPending = true;
+            })
             .addCase(putLists.fulfilled, (state, action) => {
                 state.list = action.payload;
+                state.isPending = false;
             })
             .addCase(deleteLists.fulfilled, (state, action) => {
                 state.lists = state.lists.filter(list => list._id !== action.payload);
             })
+            .addCase(createLists.pending, (state) => {
+                state.isPending = true;
+            })
+            .addCase(createLists.fulfilled, (state) => {
+                state.isPending = false;
+            })
+            
     },
 });
 
-export const { setListVal } = slice.actions;
+export const { setListVal, resetPending } = slice.actions;
 export default slice.reducer;

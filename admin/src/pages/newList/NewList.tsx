@@ -5,7 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
 import { getList } from '../../redux/movieListSlice';
 import { useEffect } from "react";
-import { createLists } from '../../redux/listsSlice';
+import { createLists, resetPending } from '../../redux/listsSlice';
+import LoadingSpin from "react-loading-spin";
+
 
 interface INewProductProps {
 }
@@ -14,13 +16,14 @@ const NewProduct: React.FunctionComponent<INewProductProps> = (props) => {
 
     const dispatch = useDispatch<AppDispatch>();
     const movies = useSelector((state: RootState) => state.movies.movies);
+    const isPending = useSelector((state: RootState) => state.lists.isPending);
     const content = useRef<HTMLSelectElement>(null!);
     useEffect(() => {
 
         dispatch(getList());
 
         return () => {
-
+            dispatch(resetPending());
         }
     }, [])
 
@@ -62,6 +65,13 @@ const NewProduct: React.FunctionComponent<INewProductProps> = (props) => {
 
     return (
         <div className="new-movie">
+            {
+                isPending && (
+                    <div className={"loading-spin"}>
+                        <LoadingSpin />
+                    </div>
+                )
+            }
             <h1 className="add-movie-title">New List</h1>
             <form className="add-movie-form">
                 <div className="add-movie-item">
