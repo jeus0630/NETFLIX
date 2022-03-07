@@ -1,77 +1,95 @@
-.navbar{
-    position: fixed;
-    top: 0;
-    z-index: 10;
-    width: 100%;
-    background: linear-gradient(to top, transparent 0%, rgb(0, 0, 0, 0.3) 50%);
-    color: #fff;
-    font-size: 14px;
-    transition: background .35s ease-in-out;
+@import "../../App.scss";
 
-    &.scrolled{
-        background-color: var(--main-color);
-    }
-    
-    .container{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 70px;
-        padding: 0px 50px;
+.navbar {
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  background: linear-gradient(to top, transparent 0%, rgb(0, 0, 0, 0.3) 50%);
+  color: #fff;
+  font-size: 14px;
+  transition: background 0.35s ease-in-out;
 
-        .left{
-            display: flex;
-            align-items: center;
-            img{ 
-                height: 25px;
-                margin-right: 40px;
-            }
+  .netflix-logo {
+    cursor: pointer;
+  }
 
-            .link{
-                margin-right: 20px;
-                cursor: pointer;
-            }
+  &.scrolled {
+    background-color: var(--main-color);
+  }
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    padding: 0px 50px;
+
+    .left {
+      display: flex;
+      align-items: center;
+      img {
+        height: 25px;
+        margin-right: 40px;
+
+        @include tablet {
+          display: none;
+        }
+      }
+
+      .link {
+        margin-right: 20px;
+        cursor: pointer;
+
+        @include tablet {
+          display: none;
         }
 
-        .right{
-            display: flex;
-            align-items: center;
-            
-            .icon{
-                margin: 0px 15px;
-                cursor: pointer;
-            }
+        &.stay {
+          @include tablet {
+            display: block;
+          }
+        }
+      }
+    }
 
-            img{
-                width: 30px;
-                height: 30px;
-                border-radius: 5px;
-                object-fit: cover;
-                cursor: pointer;
-            }
+    .right {
+      display: flex;
+      align-items: center;
 
-            .profile{
-                .options{
-                    display: none;
-                    background-color: var(--main-color);
-                    border-radius: 5px;
+      .icon {
+        margin: 0px 15px;
+        cursor: pointer;
+      }
 
-                    span{
-                        padding: 10px;
-                        cursor: pointer;
-                    }
-                }
+      img {
+        width: 30px;
+        height: 30px;
+        border-radius: 5px;
+        object-fit: cover;
+        cursor: pointer;
+      }
 
-                &:hover{
-                    .options{
-                        position: absolute;
-                        display: flex;
-                        flex-direction: column;
-                        
-                    }
-                }
-            }
+      .profile {
+        .options {
+          display: none;
+          background-color: var(--main-color);
+          border-radius: 5px;
+
+          span {
+            padding: 10px;
+            cursor: pointer;
+          }
         }
 
+        &:hover {
+          .options {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+          }
+        }
+      }
     }
+  }
 }

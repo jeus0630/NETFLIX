@@ -23,6 +23,7 @@ type Info = {
     isSeries: boolean;
     createdAt: string;
     updatedAt: string;
+    duration: string;
     __v: number;
 }
 
@@ -46,6 +47,7 @@ const ListItem: React.FunctionComponent<IListItemProps> = ({ index, id }) => {
         isSeries: false,
         createdAt: '',
         updatedAt: '',
+        duration: '',
         __v: 0
     });
 
@@ -76,7 +78,7 @@ const ListItem: React.FunctionComponent<IListItemProps> = ({ index, id }) => {
 
         }
 
-    }, [])  
+    }, [])
 
 
     return (
@@ -100,7 +102,7 @@ const ListItem: React.FunctionComponent<IListItemProps> = ({ index, id }) => {
                                     <ThumbDownAltOutlined className='icon'></ThumbDownAltOutlined>
                                 </div>
                                 <div className="item-info-top">
-                                    <span>1 hour 14 mins</span>
+                                    <span>{info.duration}</span>
                                     <span className='limit'>+{info.limit}</span>
                                     <span>{info.year}</span>
                                 </div>
