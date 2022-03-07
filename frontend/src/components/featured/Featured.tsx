@@ -2,6 +2,7 @@ import { InfoOutlined, PlayArrow } from "@mui/icons-material";
 import * as React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { setGenre } from "../../redux/genreSlice";
 import { getRandomMovie } from "../../redux/movieSlice";
 import { AppDispatch, RootState } from "../../redux/store";
@@ -15,10 +16,13 @@ const Featured: React.FunctionComponent<IFeaturedProps> = ({ type }) => {
 
   const dispatch = useDispatch<AppDispatch>();
   const movie = useSelector((state: RootState) => state.movie);
+  const trailer = "https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c0fd273d2c6d9a064f3ae35579b2bbdf&profile_id=139&oauth2_token_id=57447761";
+  const navigate = useNavigate();
 
   useEffect(() => {
 
     dispatch(getRandomMovie(type));
+
 
     return () => {
 
@@ -66,10 +70,12 @@ const Featured: React.FunctionComponent<IFeaturedProps> = ({ type }) => {
           {movie.desc}
         </span>
         <div className="buttons">
-          <button className="play">
-            <PlayArrow></PlayArrow>
-            <span>Play</span>
-          </button>
+          <Link to="/watch" state={trailer}>
+            <button className="play">
+              <PlayArrow></PlayArrow>
+              <span>Play</span>
+            </button>
+          </Link>
           <button className="more">
             <InfoOutlined></InfoOutlined>
             <span>Info</span>

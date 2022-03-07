@@ -87,13 +87,13 @@ const ListItem: React.FunctionComponent<IListItemProps> = ({ index, id }) => {
             onMouseEnter={() => { setIsHovered(true) }}
             onMouseLeave={() => { setIsHovered(false) }}
             style={{ left: isHovered ? index * 225 - 50 + index * 2.5 : undefined }}>
-            <Link to="/watch" state={info.video}>
+            <Link to="/watch" state={trailer}>
                 <img src={info.img}
                     alt="" />
                 {
                     isHovered && (
                         <>
-                            <video src={info.trailer} autoPlay={true} loop></video>
+                            <video src={trailer} autoPlay={true} loop></video>
                             <div className="item-info">
                                 <div className="icons">
                                     <PlayArrow className='icon'></PlayArrow>
