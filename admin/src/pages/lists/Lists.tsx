@@ -63,7 +63,7 @@ const Products: React.FunctionComponent<IProductsProps> = (props) => {
     return (
         <>
             {
-                rows[0]._id && (
+                rows[0]?._id && (
                     <div className="product-list">
                         <DataGrid rows={rows} disableSelectionOnClick columns={columns} checkboxSelection pageSize={8} />
                     </div>
