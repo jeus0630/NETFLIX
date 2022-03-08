@@ -53,31 +53,35 @@ export const getNewUsers = createAsyncThunk("/new-users/get", async () => {
         });
 
         const data = await res.json();
-
-        return data;
+        
+        return data.sort((a: NewUsers,b: NewUsers)=>{
+            if(a.createdAt < b.createdAt) return 1;
+            else return -1;
+        });;
     } catch (err) {
         console.log(err);
     }
 
 });
 
+type NewUsers = {
+    _id: string;
+    username: string;
+    email: string;
+    password: string;
+    profilePic: string;
+    isAdmin: boolean;
+    createdAt: string;
+    updatedAt: string;
+    __v: 0
+}
 
 type InitialState = {
     stats: {
         name: string;
         "New User": string;
     }[];
-    newUsers: {
-        _id: string;
-        username: string;
-        email: string;
-        password: string;
-        profilePic: string;
-        isAdmin: boolean;
-        createdAt: string;
-        updatedAt: string;
-        __v: 0
-    }[];
+    newUsers: NewUsers[];
 };
 
 const initialState: InitialState = {
