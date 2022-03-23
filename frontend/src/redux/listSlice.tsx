@@ -5,7 +5,7 @@ export const getRandomList = createAsyncThunk("/random-lists/get",
     async ({ type, genre }: { type?: string, genre?: string }) => {
         try {
             const res = await fetch(
-                `/api/lists?${type ? "type=" + type : ""}${genre ? "&genre=" + genre : ""}`,
+                `${process.env.REACT_APP_SERVER_API_URL}/api/lists?${type ? "type=" + type : ""}${genre ? "&genre=" + genre : ""}`,
                 {
                     headers: {
                         token: JSON.parse(localStorage.getItem("user") as string)

@@ -19,7 +19,7 @@ export const getStats = createAsyncThunk("/stats/get", async () => {
     ];
 
     try {
-        const res = await fetch("/api/users/stats", {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_API_URL}/api/users/stats`, {
             headers: {
                 token: "barere " + JSON.parse(localStorage.getItem('user') as string).token
             }
@@ -46,16 +46,16 @@ export const getStats = createAsyncThunk("/stats/get", async () => {
 export const getNewUsers = createAsyncThunk("/new-users/get", async () => {
 
     try {
-        const res = await fetch("/api/users?new=true", {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_API_URL}/api/users?new=true`, {
             headers: {
                 token: "barere " + JSON.parse(localStorage.getItem('user') as string).token
             }
         });
 
         const data = await res.json();
-        
-        return data.sort((a: NewUsers,b: NewUsers)=>{
-            if(a.createdAt < b.createdAt) return 1;
+
+        return data.sort((a: NewUsers, b: NewUsers) => {
+            if (a.createdAt < b.createdAt) return 1;
             else return -1;
         });;
     } catch (err) {

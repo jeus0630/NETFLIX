@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export const postLogin = createAsyncThunk("/login/post", async ({ button, login }: { button: EventTarget, login: { email: string; password: string } }) => {
 
     try {
-        const res = await fetch("/api/auth/login", {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_API_URL}/api/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/JSON'

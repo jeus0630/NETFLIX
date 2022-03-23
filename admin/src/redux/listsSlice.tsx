@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const getLists = createAsyncThunk("/lists/get", async () => {
     try {
-        const res = await fetch('/api/lists/', {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_API_URL}/api/lists/`, {
             headers: {
                 token: "barere " + JSON.parse(localStorage.getItem('user') as string).token
             }
@@ -41,7 +41,7 @@ export const putLists = createAsyncThunk("/lists/put", async (data: {
     }
 }) => {
     try {
-        const res = await fetch(`/api/lists/${data.id}`, {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_API_URL}/api/lists/${data.id}`, {
             method: "PUT",
             headers: {
                 token: "barere " + JSON.parse(localStorage.getItem('user') as string).token,
@@ -65,7 +65,7 @@ export const createLists = createAsyncThunk("/lists/post", async (data: {
     content: string[]
 }) => {
     try {
-        const res = await fetch("/api/lists/", {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_API_URL}/api/lists/`, {
             method: "POST",
             headers: {
                 token: "barere " + JSON.parse(localStorage.getItem('user') as string).token,
@@ -83,7 +83,7 @@ export const createLists = createAsyncThunk("/lists/post", async (data: {
 
 export const deleteLists = createAsyncThunk("/lists/delete", async (id: string) => {
     try {
-        const res = await fetch(`/api/lists/${id}`, {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_API_URL}/api/lists/${id}`, {
             method: "DELETE",
             headers: {
                 token: "barere " + JSON.parse(localStorage.getItem('user') as string).token,

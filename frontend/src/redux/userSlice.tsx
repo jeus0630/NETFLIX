@@ -6,7 +6,7 @@ export const registerUser = createAsyncThunk("/api/auth/register", async (info: 
     const { step, ...rest } = info;
 
     try {
-        const res = await fetch("/api/auth/register", {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_API_URL}/api/auth/register`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -28,7 +28,7 @@ export const logInUser = createAsyncThunk("/api/auth/login", async (data: {
     password: string;
 }) => {
     try {
-        const res = await fetch("/api/auth/login", {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_API_URL}/api/auth/login`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

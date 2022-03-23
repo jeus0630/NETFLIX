@@ -9,7 +9,9 @@ const authRoute = require('./routes/auth');
 const usersRoute = require('./routes/users');
 const movieRoute = require('./routes/movies');
 const listRoute = require('./routes/lists');
+var cors = require('cors')
 
+app.use(cors());
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json());

@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const getList = createAsyncThunk("/movieList/get", async () => {
     try {
-        const res = await fetch('/api/movies/', {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_API_URL}/api/movies/`, {
             headers: {
                 token: "barere " + JSON.parse(localStorage.getItem('user') as string).token
             }
@@ -19,7 +19,7 @@ export const getList = createAsyncThunk("/movieList/get", async () => {
 
 export const deleteMovie = createAsyncThunk("/movie/delete", async (id: string) => {
     try {
-        const res = await fetch(`/api/movies/${id}`, {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_API_URL}/api/movies/${id}`, {
             method: 'DELETE',
             headers: {
                 token: "barere " + JSON.parse(localStorage.getItem('user') as string).token
@@ -36,7 +36,7 @@ export const deleteMovie = createAsyncThunk("/movie/delete", async (id: string) 
 
 export const createMovie = createAsyncThunk("/movie/post", async (param: any) => {
     try {
-        const res = await fetch(`/api/movies/`, {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_API_URL}/api/movies/`, {
             method: 'POST',
             headers: {
                 token: "barere " + JSON.parse(localStorage.getItem('user') as string).token,
@@ -59,7 +59,7 @@ export const createMovie = createAsyncThunk("/movie/post", async (param: any) =>
 
 export const updateMovie = createAsyncThunk("/movie/put", async ({ id, info }: { id: string, info: InitialState }) => {
     try {
-        const res = await fetch(`/api/movies/${id}`, {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_API_URL}/api/movies/${id}`, {
             method: "PUT",
             headers: {
                 token: "barere " + JSON.parse(localStorage.getItem('user') as string).token,

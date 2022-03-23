@@ -5,7 +5,7 @@ export const getRandomMovie = createAsyncThunk('/random-movie/get',
     async (type?: string) => {
         try {
             const res = await fetch(
-                `api/movies/random?type=${type}`,
+                `${process.env.REACT_APP_SERVER_API_URL}/api/movies/random?type=${type}`,
                 {
                     headers: {
                         token: JSON.parse(localStorage.getItem("user") as string)
