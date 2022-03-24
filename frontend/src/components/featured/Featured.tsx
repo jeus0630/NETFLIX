@@ -63,7 +63,7 @@ const Featured: React.FunctionComponent<IFeaturedProps> = ({ type }) => {
       />
       <div className="info">
         <img
-          src={movie.imgTitle}
+          src={movie.imgTitle || undefined}
           alt=""
         />
         <span className="desc">
