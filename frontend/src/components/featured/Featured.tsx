@@ -58,7 +58,7 @@ const Featured: React.FunctionComponent<IFeaturedProps> = ({ type }) => {
         </div>
       )}
       <img
-        src={movie.img}
+        src={movie.img || '/images/gray-box.jpeg'}
         alt=""
       />
       <div className="info">

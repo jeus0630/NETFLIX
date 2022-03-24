@@ -32,7 +32,7 @@ const Home: React.FunctionComponent<IHomeProps> = ({ type }) => {
       <Navbar></Navbar>
       <Featured type={type}></Featured>
       {
-        lists.length &&
+        lists[0]._id &&
         lists.map(list => {
           return (
             <List key={list._id} list={list}></List>

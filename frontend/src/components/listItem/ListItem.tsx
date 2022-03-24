@@ -80,15 +80,13 @@ const ListItem: React.FunctionComponent<IListItemProps> = ({ index, id }) => {
 
     }, [])
 
-
     return (
-
         <li className="list-item"
             onMouseEnter={() => { setIsHovered(true) }}
             onMouseLeave={() => { setIsHovered(false) }}
             style={{ left: isHovered ? index * 225 - 50 + index * 2.5 : undefined }}>
             <Link to="/watch" state={trailer}>
-                <img src={info.img}
+                <img src={info.img || '/images/gray-box.jpeg'}
                     alt="" />
                 {
                     isHovered && (
@@ -117,6 +115,7 @@ const ListItem: React.FunctionComponent<IListItemProps> = ({ index, id }) => {
             </Link>
         </li>
     );
+
 };
 
 export default ListItem;

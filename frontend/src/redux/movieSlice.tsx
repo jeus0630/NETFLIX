@@ -69,6 +69,9 @@ const slice = createSlice({
                 ...action.payload
             }
         })
+        .addCase(getRandomMovie.pending, (state) => {
+              
+        })
     },
 });
 
